@@ -9,7 +9,7 @@ var devURL;
 if (process.env.PROJECT_NAME ) {
   devURL = 'https://' + process.env.PROJECT_NAME + '.gomix.me';
 } else {
-  devURL = 'https://localhost:3000';
+  devURL = 'http://localhost:3000';
 }
 var devServer = 'webpack-dev-server/client?' + devURL;
 module.exports = {
