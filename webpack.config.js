@@ -1,28 +1,19 @@
 'use strict';
-console.log(console)
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var devServer;
 
 var os = require('os');
 var dns = require('dns');
-console.log(os.hostname());
-new Promise( (resolve,reject) => dns.lookup('tight-timpani.gomix.me', (err,addresses,family) => resolve(addresses)))
-    .then((address) =>{console.log(address);return address})
-    .then( (address) => new Promise(( resolve, reject) => dns.reverse(address, (err, hostnames) => resolve(hostnames)))) 
-    .then((address) =>{console.log( address);return address})
-// new Promise( resolve, reject) dns.lookup(os.hostname())).then ((e)=>console.log(e)) 
-// Promise.resolve() .then ( () => dns.lookup(os.hostname(), (err,addresses,family) => Promise.resolve(addresses)))
-//   .then ((addresses) => console.log(addresses));
-new Promise( (resolve,reject) => dns.lookup('tight-timpani.gomix.me', (err,addresses,family) => resolve(addresses)))
-    .then((address) =>{console.log(address);return address})
+var devURL;
 if (process.env.PROJECT_NAME ) {
-  devServer = 'webpack-dev-server/client?https://' + process.env.PROJECT_NAME + '.gomix.me';
+  devURL = 'https://' + process.env.PROJECT_NAME + '.gomix.me';
 } else {
-  devServer = 'webpack-dev-server/client?https://localhost:3000'
+  devURL = 'https://localhost:3000';
 }
+var devServer = 'webpack-dev-server/client?' + devURL;
 module.exports = {
+    devURL: devURL,
     devtool: 'eval-source-map',
     entry: [
         devServer,
