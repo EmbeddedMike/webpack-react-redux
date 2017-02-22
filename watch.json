@@ -14,8 +14,9 @@
     "include": [
       "\\.json",
       "webpack.config.js",
-      "server.js"
+      "server.js",
+      ".eslintrc"
     ]
   },
-  "throttle": 1000
+  "throttle": 10000
 }

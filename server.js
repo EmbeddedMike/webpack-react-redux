@@ -5,6 +5,7 @@ var config = require('./webpack.config');
 new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath,
     hot: true,
+   proxy: { '*': config.devURL },
     historyApiFallback: true,
     // It suppress error shown in console, so it has to be set to false.
     quiet: false,
@@ -25,6 +26,6 @@ new WebpackDevServer(webpack(config), {
     if (err) {
         console.log(err);
     }
-
+ 
   console.log('Listening at localhost:3000');
 });
