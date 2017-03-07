@@ -2,15 +2,26 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-
 var os = require('os');
 var dns = require('dns');
+
 var devURL;
 if (process.env.PROJECT_NAME ) {
   devURL = 'https://' + process.env.PROJECT_NAME + '.gomix.me';
 } else {
   devURL = 'http://localhost:3000';
 }
+var BrowserSyncHotPlugin = require("browser-sync-dev-hot-webpack-plugin");
+console.log(BrowserSyncHotPlugin)
+const BROWSER_SYNC_OPTIONS = {
+    proxy: {
+    target: "http://localhost:3000",
+    ws: true
+}};
+const DEV_MIDDLEWARE_OPTIONS = {
+    // publicPath: '/my/public/path'
+};
+const HOT_MIDDLEWARE_OPTIONS = {};
 var devServer = 'webpack-dev-server/client?' + devURL;
 module.exports = {
     devURL: devURL,
@@ -33,11 +44,20 @@ module.exports = {
           filename: 'index.html'
         }),
         new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
+
         new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify('development')
-        })
+        }),
+        new BrowserSyncHotPlugin({
+            browserSyncOptions: BROWSER_SYNC_OPTIONS,
+            devMiddlewareOptions: DEV_MIDDLEWARE_OPTIONS,
+            hotMiddlewareOptions: HOT_MIDDLEWARE_OPTIONS,
+            callback() {
+                console.log('Callback')
+            }
+        }),
+        new webpack.HotModuleReplacementPlugin(),
     ],
     eslint: {
         configFile: '.eslintrc',

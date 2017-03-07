@@ -5,13 +5,14 @@ var config = require('./webpack.config');
 new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath,
     hot: true,
-   proxy: { '*': config.devURL },
+  //  proxy: { '*': config.devURL },
     historyApiFallback: true,
     // It suppress error shown in console, so it has to be set to false.
     quiet: false,
     // It suppress everything except error, so it has to be set to false as well
     // to see success build.
     noInfo: false,
+    // contentBase: resolve(__dirname, 'dist'),
     stats: {
       // Config for minimal console.log mess.
       assets: false,
@@ -26,6 +27,6 @@ new WebpackDevServer(webpack(config), {
     if (err) {
         console.log(err);
     }
- 
+
   console.log('Listening at localhost:3000');
 });
