@@ -9,13 +9,13 @@ var devURL;
 if (process.env.PROJECT_NAME ) {
   devURL = 'https://' + process.env.PROJECT_NAME + '.gomix.me';
 } else {
-  devURL = 'http://localhost:3000';
+  devURL = 'http://localhost:3004';
 }
 var BrowserSyncHotPlugin = require("browser-sync-dev-hot-webpack-plugin");
 console.log(BrowserSyncHotPlugin)
 const BROWSER_SYNC_OPTIONS = {
     proxy: {
-    target: "http://localhost:3000",
+    target: "http://localhost:3004",
     ws: true
 }};
 const DEV_MIDDLEWARE_OPTIONS = {
@@ -24,7 +24,7 @@ const DEV_MIDDLEWARE_OPTIONS = {
 const HOT_MIDDLEWARE_OPTIONS = {};
 var devServer = 'webpack-dev-server/client?' + devURL;
 module.exports = {
-    devURL: devURL,
+    // devURL: devURL,  //Property no longer allowed
     devtool: 'eval-source-map',
     entry: [
         devServer,
@@ -43,7 +43,8 @@ module.exports = {
           inject: 'body',
           filename: 'index.html'
         }),
-        new webpack.optimize.OccurenceOrderPlugin(),
+        // new webpack.optimize.OccurenceOrderPlugin(),
+        //No longer needed
 
         new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({
@@ -59,35 +60,37 @@ module.exports = {
         }),
         new webpack.HotModuleReplacementPlugin(),
     ],
-    eslint: {
-        configFile: '.eslintrc',
-        failOnWarning: false,
-        failOnError: false
-    },
+    //Schema no longer allows eslint
+    // eslint: {
+    //     configFile: '.eslintrc',
+    //     failOnWarning: false,
+    //     failOnError: false
+    // },
     module: {
-        preLoaders: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'eslint'
-            }
-        ],
+        // preLoaders: [
+        //     {
+        //         test: /\.js$/,
+        //         exclude: /node_modules/,
+        //         loader: 'eslint'
+        //     }
+        // ],
+        //Preloaders not allowed
         loaders: [
             {
                 test: /\.js?$/,
                 exclude: /node_modules/,
-                loader: 'babel'
+                loader: 'babel-loader'
             },
             {
                 test: /\.json?$/,
-                loader: 'json'
+                loader: 'json-loader'
             },
             {
                 test: /\.scss$/,
-                loader: 'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]!sass'
+                loader: 'style-loader!css-loader?modules&localIdentName=[name]---[local]---[hash:base64:5]!sass-loader'
             },
-            { test: /\.woff(2)?(\?[a-z0-9#=&.]+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
-            { test: /\.(ttf|eot|svg)(\?[a-z0-9#=&.]+)?$/, loader: 'file' }
+            // { test: /\.woff(2)?(\?[a-z0-9#=&.]+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
+            // { test: /\.(ttf|eot|svg)(\?[a-z0-9#=&.]+)?$/, loader: 'file' }
         ]
     }
 };

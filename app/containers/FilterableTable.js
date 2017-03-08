@@ -25,7 +25,7 @@ class SyncInput extends Component {
             this.timer = setInterval(this.timerProc.bind(this), 1000);
         } else {
             clearInterval(this.timer);
-            console.log('Timer cleared');
+            console.log('Timer cleared!');
         }
     }
     timerProc() {
