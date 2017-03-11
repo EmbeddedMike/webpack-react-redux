@@ -14,6 +14,7 @@ if (process.env.PROJECT_NAME ) {
 var BrowserSyncHotPlugin = require("browser-sync-dev-hot-webpack-plugin");
 console.log(BrowserSyncHotPlugin)
 const BROWSER_SYNC_OPTIONS = {
+    ui: false,
     proxy: {
     target: "http://localhost:3004",
     ws: true
